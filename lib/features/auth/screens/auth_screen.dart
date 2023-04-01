@@ -1,6 +1,7 @@
 import 'package:amazon_clone/common/widgets/c_button.dart';
 import 'package:amazon_clone/common/widgets/c_textfield.dart';
 import 'package:amazon_clone/const/global_variables.dart';
+import 'package:amazon_clone/features/auth/services/auth_service.dart';
 import 'package:flutter/material.dart';
 
 enum Auth { signIn, signUp }
@@ -22,6 +23,17 @@ class _AuthScreenState extends State<AuthScreen> {
   final TextEditingController _name = TextEditingController();
   final TextEditingController _email = TextEditingController();
   final TextEditingController _password = TextEditingController();
+
+  final AuthService authService = AuthService();
+
+  void signUpUser() {
+    authService.signUpUser(
+      _email.text,
+      _password.text,
+      _name.text,
+      context,
+    );
+  }
 
   @override
   void dispose() {
@@ -91,7 +103,14 @@ class _AuthScreenState extends State<AuthScreen> {
                     const SizedBox(
                       height: 10,
                     ),
-                    const CustomButton(title: "Sign Up")
+                    CustomButton(
+                      title: "Sign Up",
+                      ontap: () {
+                        if (_signUpFormKey.currentState!.validate()) {
+                          signUpUser();
+                        }
+                      },
+                    )
                   ]),
                 ),
               ),
@@ -134,7 +153,10 @@ class _AuthScreenState extends State<AuthScreen> {
                     const SizedBox(
                       height: 10,
                     ),
-                    const CustomButton(title: "Sign In")
+                    CustomButton(
+                      title: "Sign In",
+                      ontap: () {},
+                    )
                   ]),
                 ),
               ),
