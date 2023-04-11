@@ -21,11 +21,13 @@ class AuthService {
           address: '',
           type: '',
           token: '');
+
       http.Response res = await http.post(Uri.parse('$uri/api/signup'),
           body: json.encode(user.toJson()),
           headers: <String, String>{
             "Content-Type": "application/json; charset=UTF-8"
           });
+      print(res.body);
 
       httpErrorHandle(
           response: res,

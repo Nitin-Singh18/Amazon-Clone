@@ -26,8 +26,8 @@ class _AuthScreenState extends State<AuthScreen> {
 
   final AuthService authService = AuthService();
 
-  void signUpUser() {
-    authService.signUpUser(
+  void signUpUser() async {
+    await authService.signUpUser(
       _email.text,
       _password.text,
       _name.text,
