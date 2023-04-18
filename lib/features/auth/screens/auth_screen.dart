@@ -43,13 +43,13 @@ class _AuthScreenState extends State<AuthScreen> {
     );
   }
 
-  @override
-  void dispose() {
-    super.dispose();
-    _name.dispose();
-    _email.dispose();
-    _password.dispose();
-  }
+  // @override
+  // void dispose() {
+  //   super.dispose();
+  //   _name.dispose();
+  //   _email.dispose();
+  //   _password.dispose();
+  // }
 
   @override
   Widget build(BuildContext context) {
