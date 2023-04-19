@@ -1,3 +1,5 @@
+import 'package:amazon_clone/common/widgets/bottom_bar.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter/src/widgets/placeholder.dart';
 import 'package:provider/provider.dart';
@@ -26,7 +28,7 @@ class _AuthenticationState extends State<Authentication> {
   @override
   Widget build(BuildContext context) {
     return context.watch<UserProvider>().user.token.isNotEmpty
-        ? const HomeScreen()
+        ? const BottomBar()
         : const AuthScreen();
   }
 }

@@ -2,6 +2,7 @@
 
 import 'dart:convert';
 
+import 'package:amazon_clone/common/widgets/bottom_bar.dart';
 import 'package:amazon_clone/const/app_keys.dart';
 import 'package:amazon_clone/const/error_handling.dart';
 import 'package:amazon_clone/const/utils.dart';
@@ -70,7 +71,7 @@ class AuthService {
             print(prefs.getString(AppKeys.token));
             Navigator.pushNamedAndRemoveUntil(
               context,
-              HomeScreen.routeName,
+              BottomBar.routeName,
               (route) => false,
             );
           });
