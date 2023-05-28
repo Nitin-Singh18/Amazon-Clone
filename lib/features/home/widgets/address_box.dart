@@ -33,14 +33,14 @@ class AddressBox extends StatelessWidget {
               padding: EdgeInsets.only(left: 10),
               child: Text(
                 "Delivery to ${user.name} - ${user.address}",
-                style: TextStyle(
+                style: const TextStyle(
                   fontWeight: FontWeight.w500,
                 ),
                 overflow: TextOverflow.ellipsis,
               ),
             ),
           ),
-          Icon(
+          const Icon(
             Icons.arrow_drop_down_outlined,
             size: 18,
           )

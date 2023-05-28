@@ -17,7 +17,7 @@ class _PostsScreenState extends State<PostsScreen> {
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
-          Navigator.pushNamed(context, AddProdcutScreen.routeName);
+          Navigator.pushNamed(context, AddProductScreen.routeName);
         },
         tooltip: "Add a product",
         child: const Icon(Icons.add),

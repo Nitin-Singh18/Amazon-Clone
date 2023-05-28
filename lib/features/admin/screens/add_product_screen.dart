@@ -2,20 +2,18 @@ import 'package:amazon_clone/common/widgets/c_button.dart';
 import 'package:amazon_clone/common/widgets/c_textfield.dart';
 import 'package:dotted_border/dotted_border.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/src/widgets/framework.dart';
-import 'package:flutter/src/widgets/placeholder.dart';
 
 import '../../../const/global_variables.dart';
 
-class AddProdcutScreen extends StatefulWidget {
+class AddProductScreen extends StatefulWidget {
   static const String routeName = '/add-product';
-  const AddProdcutScreen({super.key});
+  const AddProductScreen({super.key});
 
   @override
-  State<AddProdcutScreen> createState() => _AddProdcutScreenState();
+  State<AddProductScreen> createState() => _AddProductScreenState();
 }
 
-class _AddProdcutScreenState extends State<AddProdcutScreen> {
+class _AddProductScreenState extends State<AddProductScreen> {
   final TextEditingController productNameController = TextEditingController();
   final TextEditingController descriptionController = TextEditingController();
   final TextEditingController priceController = TextEditingController();
@@ -76,8 +74,8 @@ class _AddProdcutScreenState extends State<AddProdcutScreen> {
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        Icon(Icons.folder_open_outlined),
-                        SizedBox(
+                        const Icon(Icons.folder_open_outlined),
+                        const SizedBox(
                           height: 15,
                         ),
                         Text(
@@ -91,13 +89,13 @@ class _AddProdcutScreenState extends State<AddProdcutScreen> {
                     ),
                   ),
                 ),
-                SizedBox(
+                const SizedBox(
                   height: 30,
                 ),
                 CustomTextfield(
                     controller: productNameController,
                     hintText: "Product Name"),
-                SizedBox(
+                const SizedBox(
                   height: 10,
                 ),
                 CustomTextfield(
@@ -105,23 +103,25 @@ class _AddProdcutScreenState extends State<AddProdcutScreen> {
                   hintText: "Description",
                   maxLines: 7,
                 ),
-                SizedBox(
+                const SizedBox(
                   height: 10,
                 ),
                 CustomTextfield(controller: priceController, hintText: "Price"),
-                SizedBox(
+                const SizedBox(
                   height: 10,
                 ),
                 CustomTextfield(
                     controller: quantityController, hintText: "Quantity"),
-                SizedBox(
+                const SizedBox(
                   height: 10,
                 ),
                 SizedBox(
                   width: double.infinity,
                   child: DropdownButton(
                     value: category,
-                    icon: Icon(Icons.keyboard_arrow_down),
+                    icon: const Icon(
+                      Icons.keyboard_arrow_down,
+                    ),
                     items: productCategories.map(
                       (e) {
                         return DropdownMenuItem(value: e, child: Text(e));
@@ -136,7 +136,7 @@ class _AddProdcutScreenState extends State<AddProdcutScreen> {
                     },
                   ),
                 ),
-                SizedBox(
+                const SizedBox(
                   height: 10,
                 ),
                 CustomButton(title: "Sell", ontap: () {})

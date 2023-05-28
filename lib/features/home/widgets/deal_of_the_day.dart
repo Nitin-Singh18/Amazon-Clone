@@ -43,12 +43,44 @@ class _DealOfDayState extends State<DealOfDay> {
             style: TextStyle(fontSize: 16),
           ),
         ),
+        SingleChildScrollView(
+          scrollDirection: Axis.horizontal,
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Image.network(
+                "https://images.unsplash.com/photo-1575024357670-2b5164f470c3?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8MTV8fGxhcHRvcHxlbnwwfHwwfHw%3D&auto=format&fit=crop&w=500&q=60",
+                height: 100,
+                width: 100,
+                fit: BoxFit.fitWidth,
+              ),
+              Image.network(
+                "https://images.unsplash.com/photo-1575024357670-2b5164f470c3?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8MTV8fGxhcHRvcHxlbnwwfHwwfHw%3D&auto=format&fit=crop&w=500&q=60",
+                height: 100,
+                width: 100,
+                fit: BoxFit.fitWidth,
+              ),
+              Image.network(
+                "https://images.unsplash.com/photo-1575024357670-2b5164f470c3?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8MTV8fGxhcHRvcHxlbnwwfHwwfHw%3D&auto=format&fit=crop&w=500&q=60",
+                height: 100,
+                width: 100,
+                fit: BoxFit.fitWidth,
+              ),
+              Image.network(
+                "https://images.unsplash.com/photo-1575024357670-2b5164f470c3?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8MTV8fGxhcHRvcHxlbnwwfHwwfHw%3D&auto=format&fit=crop&w=500&q=60",
+                height: 100,
+                width: 100,
+                fit: BoxFit.fitWidth,
+              ),
+            ],
+          ),
+        ),
         Container(
           alignment: Alignment.topLeft,
           padding: const EdgeInsets.symmetric(vertical: 5).copyWith(left: 10),
-          child: const Text(
-            "See all products",
-            style: TextStyle(fontSize: 12, color: Colors.cyan),
+          child: Text(
+            "See all deals",
+            style: TextStyle(color: Colors.cyan[800]),
           ),
         )
       ],
