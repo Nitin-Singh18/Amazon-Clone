@@ -40,6 +40,9 @@ dependencies:
   shared_preferences: ^2.1.0
   badges: ^3.1.1
   dotted_border: ^2.0.0+3
+  image_picker: ^0.8.7+5
+  file_picker: ^5.3.1
+  cloudinary_public: ^0.21.0
 
 dev_dependencies:
   flutter_test:

@@ -1,13 +1,9 @@
 import 'package:amazon_clone/const/global_variables.dart';
-import 'package:amazon_clone/features/auth/screens/auth_screen.dart';
 import 'package:amazon_clone/features/auth/screens/authenticate.dart';
-import 'package:amazon_clone/features/home/screens/home_screen.dart';
 import 'package:amazon_clone/providers/user_provider.dart';
 import 'package:amazon_clone/router.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-
-import 'features/auth/services/auth_service.dart';
 
 void main() {
   runApp(
@@ -49,13 +45,9 @@ class MyApp extends StatelessWidget {
           ),
         ),
         //this function is called when named route is not defined in 'routes', and
-        //this function generate the appropriate widget tree for the named route.
+        //It generate the appropriate widget tree for the named route.
         onGenerateRoute: (settings) => generateRoute(settings),
         home: Authentication(),
-        // Builder(
-        // builder: (context) {
-
-        // },
       ),
     );
   }
