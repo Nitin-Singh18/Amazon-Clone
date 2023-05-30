@@ -1,4 +1,7 @@
+import 'package:amazon_clone/features/account/widgets/product_tile.dart';
 import 'package:amazon_clone/features/admin/screens/add_product_screen.dart';
+import 'package:amazon_clone/features/admin/services/admin_services.dart';
+import 'package:amazon_clone/models/product.dart';
 import 'package:flutter/material.dart';
 
 class PostsScreen extends StatefulWidget {
@@ -9,20 +12,76 @@ class PostsScreen extends StatefulWidget {
 }
 
 class _PostsScreenState extends State<PostsScreen> {
+  List<Product>? productsList = [];
+  final AdminServices _adminServices = AdminServices();
+  @override
+  void initState() {
+    // TODO: implement initState
+    print("working");
+    fetchAllProducts();
+    super.initState();
+  }
+
+  fetchAllProducts() async {
+    productsList = await _adminServices.fetchAllProducts(context);
+    print(productsList);
+    setState(() {});
+  }
+
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: const Center(
-        child: Text("Products"),
-      ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: () {
-          Navigator.pushNamed(context, AddProductScreen.routeName);
-        },
-        tooltip: "Add a product",
-        child: const Icon(Icons.add),
-      ),
-      floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
-    );
+    return productsList == null
+        ? const CircularProgressIndicator()
+        : Scaffold(
+            body: Padding(
+              padding: const EdgeInsets.symmetric(
+                vertical: 8.0,
+              ),
+              child: GridView.builder(
+                gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                  crossAxisCount: 2,
+                ),
+                itemCount: productsList!.length,
+                itemBuilder: (BuildContext context, int index) {
+                  final product = productsList![index];
+                  return Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      SizedBox(
+                        height: 140,
+                        child: ProductTile(productImage: product.images[0]),
+                      ),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                        children: [
+                          Expanded(
+                            child: Text(
+                              product.name,
+                              overflow: TextOverflow.ellipsis,
+                              maxLines: 2,
+                            ),
+                          ),
+                          IconButton(
+                            onPressed: () {},
+                            icon: Icon(Icons.delete_outline),
+                          ),
+                        ],
+                      )
+                    ],
+                  );
+                },
+              ),
+            ),
+            floatingActionButton: FloatingActionButton(
+              onPressed: () {
+                Navigator.pushNamed(context, AddProductScreen.routeName);
+              },
+              tooltip: "Add a product",
+              child: const Icon(Icons.add),
+            ),
+            floatingActionButtonLocation:
+                FloatingActionButtonLocation.centerFloat,
+          );
   }
 }

@@ -16,9 +16,7 @@ class _AdminScreenState extends State<AdminScreen> {
   double bottomNavBarBorderWidth = 5;
 
   List<Widget> pages = [
-    const Center(
-      child: Text("Posts Page"),
-    ),
+    const PostsScreen(),
     const PostsScreen(),
     const Center(
       child: Text("Cart Page"),

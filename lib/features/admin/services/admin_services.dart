@@ -1,3 +1,6 @@
+// ignore_for_file: use_build_context_synchronously
+
+import 'dart:convert';
 import 'dart:io';
 
 import 'package:amazon_clone/const/error_handling.dart';
@@ -10,7 +13,10 @@ import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:provider/provider.dart';
 
+import '../../../providers/user_provider.dart';
+
 class AdminServices {
+  //To add the products
   void sellProduct({
     required BuildContext context,
     required String name,
@@ -21,6 +27,7 @@ class AdminServices {
     required List<File> images,
   }) async {
     final userProviderToken = context.read<UserProvider>().user.token;
+
     try {
       //*To upload images to cloudinary to get image Url and we can store
       //*that url in mongoDb
@@ -61,5 +68,50 @@ class AdminServices {
     } catch (e) {
       showSnackBar(context, e.toString());
     }
+  }
+
+  //To get all the products
+  Future<List<Product>> fetchAllProducts(BuildContext context) async {
+    final userProvider = context.read<UserProvider>().user.token;
+    List<Product> productsList = [];
+
+    try {
+      http.Response response = await http.get(
+          Uri.parse(
+            "$uri/admin/get-products",
+          ),
+          headers: {
+            'Content-Type': 'application/json; charset=UTF-8',
+            'x-auth-token': userProvider
+          });
+      httpErrorHandle(
+        response: response,
+        context: context,
+        onSuccess: () {
+          //   for (int i = 0; i < jsonDecode(response.body).length; i++) {
+          //     productsList.add(
+          //       Product.fromJson(
+          //         jsonEncode(
+          //           jsonDecode(response.body)[i],
+          //         ),
+          //       ),
+          //     );
+          //   }
+          // },
+          for (var element in jsonDecode(response.body)) {
+            productsList.add(
+              Product.fromJson(
+                jsonEncode(
+                  element,
+                ),
+              ),
+            );
+          }
+        },
+      );
+    } catch (e) {
+      showSnackBar(context, e.toString());
+    }
+    return productsList;
   }
 }
