@@ -13,8 +13,6 @@ import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:provider/provider.dart';
 
-import '../../../providers/user_provider.dart';
-
 class AdminServices {
   //To add the products
   void sellProduct({
@@ -27,7 +25,7 @@ class AdminServices {
     required List<File> images,
   }) async {
     final userProviderToken = context.read<UserProvider>().user.token;
-
+    List<Product> productsList = [];
     try {
       //*To upload images to cloudinary to get image Url and we can store
       //*that url in mongoDb
@@ -61,13 +59,15 @@ class AdminServices {
       httpErrorHandle(
           response: response,
           context: context,
-          onSuccess: () {
+          onSuccess: () async {
             showSnackBar(context, "Product Added Successfully.");
             Navigator.pop(context);
+            // productsList = await fetchAllProducts(context);
           });
     } catch (e) {
       showSnackBar(context, e.toString());
     }
+    // return productsList;
   }
 
   //To get all the products
@@ -113,5 +113,34 @@ class AdminServices {
       showSnackBar(context, e.toString());
     }
     return productsList;
+  }
+
+  //To delete a product
+  void deleteProduct(
+    BuildContext context,
+    Product product,
+    VoidCallback onSuccess,
+  ) async {
+    final userProvider = context.read<UserProvider>().user.token;
+    try {
+      http.Response response = await http.delete(
+        Uri.parse("$uri/admin/delete-product"),
+        headers: {
+          'Content-Type': 'application/json; charset=UTF-8',
+          'x-auth-token': userProvider
+        },
+        body: jsonEncode(
+          {
+            'id': product.id,
+          },
+        ),
+      );
+      httpErrorHandle(
+          response: response,
+          context: context,
+          onSuccess: () {
+            onSuccess();
+          });
+    } catch (e) {}
   }
 }
