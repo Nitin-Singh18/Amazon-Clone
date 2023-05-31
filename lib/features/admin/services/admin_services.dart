@@ -25,6 +25,8 @@ class AdminServices {
     required List<File> images,
   }) async {
     final userProviderToken = context.read<UserProvider>().user.token;
+    final productProvider =
+        Provider.of<ProductProvider>(context, listen: false);
     List<Product> productsList = [];
     try {
       //*To upload images to cloudinary to get image Url and we can store
@@ -61,18 +63,27 @@ class AdminServices {
           context: context,
           onSuccess: () async {
             showSnackBar(context, "Product Added Successfully.");
+
+            productProvider.addProduct(
+              Product.fromJson(
+                response.body,
+              ),
+            );
+
             Navigator.pop(context);
-            // productsList = await fetchAllProducts(context);
           });
     } catch (e) {
       showSnackBar(context, e.toString());
     }
-    // return productsList;
   }
 
   //To get all the products
-  Future<List<Product>> fetchAllProducts(BuildContext context) async {
+  Future<void>
+      // <List<Product>>
+      fetchAllProducts(BuildContext context) async {
     final userProvider = context.read<UserProvider>().user.token;
+    final productProvider =
+        Provider.of<ProductProvider>(context, listen: false);
     List<Product> productsList = [];
 
     try {
@@ -99,20 +110,27 @@ class AdminServices {
           //   }
           // },
           for (var element in jsonDecode(response.body)) {
-            productsList.add(
+            productProvider.addProduct(
               Product.fromJson(
                 jsonEncode(
                   element,
                 ),
               ),
             );
+            // productsList.add(
+            //   Product.fromJson(
+            //     jsonEncode(
+            //       element,
+            //     ),
+            //   ),
+            // );
           }
         },
       );
     } catch (e) {
       showSnackBar(context, e.toString());
     }
-    return productsList;
+    // return productsList;
   }
 
   //To delete a product

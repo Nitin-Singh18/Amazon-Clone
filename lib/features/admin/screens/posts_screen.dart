@@ -2,7 +2,9 @@ import 'package:amazon_clone/features/account/widgets/product_tile.dart';
 import 'package:amazon_clone/features/admin/screens/add_product_screen.dart';
 import 'package:amazon_clone/features/admin/services/admin_services.dart';
 import 'package:amazon_clone/models/product.dart';
+import 'package:amazon_clone/providers/user_provider.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class PostsScreen extends StatefulWidget {
   const PostsScreen({super.key});
@@ -13,6 +15,7 @@ class PostsScreen extends StatefulWidget {
 
 class _PostsScreenState extends State<PostsScreen> {
   List<Product>? productsList = [];
+
   final AdminServices _adminServices = AdminServices();
   @override
   void initState() {
@@ -23,9 +26,10 @@ class _PostsScreenState extends State<PostsScreen> {
   }
 
   fetchAllProducts() async {
-    productsList = await _adminServices.fetchAllProducts(context);
-    print(productsList);
-    setState(() {});
+    // productsList =
+    await _adminServices.fetchAllProducts(context);
+    // print(productsList);
+    // setState(() {});
   }
 
   void deleteProduct(Product product, int index) {
@@ -37,6 +41,7 @@ class _PostsScreenState extends State<PostsScreen> {
 
   @override
   Widget build(BuildContext context) {
+    productsList = context.watch<ProductProvider>().products;
     return productsList == null
         ? const CircularProgressIndicator()
         : Scaffold(
@@ -73,7 +78,9 @@ class _PostsScreenState extends State<PostsScreen> {
                             ),
                             InkWell(
                                 onTap: () {
-                                  deleteProduct(product, index);
+                                  Provider.of<ProductProvider>(context)
+                                      .deleteProduct(product.id);
+                                  // deleteProduct(product, index);
                                 },
                                 child: const Icon(
                                   Icons.delete_outline,
@@ -86,6 +93,50 @@ class _PostsScreenState extends State<PostsScreen> {
                   );
                 },
               ),
+              // child: GridView.builder(
+              //   gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+              //     crossAxisCount: 2,
+              //   ),
+              //   itemCount: productsList!.length,
+              //   itemBuilder: (BuildContext context, int index) {
+              //     final product = productsList![index];
+              //     return Column(
+              //       // mainAxisAlignment: MainAxisAlignment.center,
+              //       crossAxisAlignment: CrossAxisAlignment.center,
+              //       children: [
+              //         SizedBox(
+              //           height: 140,
+              //           child: ProductTile(productImage: product.images[0]),
+              //         ),
+              //         const SizedBox(
+              //           height: 2,
+              //         ),
+              //         Padding(
+              //           padding: const EdgeInsets.symmetric(horizontal: 5.0),
+              //           child: Row(
+              //             mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              //             children: [
+              //               Text(
+              //                 product.name,
+              //                 overflow: TextOverflow.ellipsis,
+              //                 maxLines: 2,
+              //                 style: const TextStyle(fontSize: 16),
+              //               ),
+              //               InkWell(
+              //                   onTap: () {
+              //                     deleteProduct(product, index);
+              //                   },
+              //                   child: const Icon(
+              //                     Icons.delete_outline,
+              //                     size: 24,
+              //                   ))
+              //             ],
+              //           ),
+              //         )
+              //       ],
+              //     );
+              //   },
+              // ),
             ),
             floatingActionButton: FloatingActionButton(
               onPressed: () {

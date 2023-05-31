@@ -9,9 +9,14 @@ void main() {
   runApp(
     MultiProvider(
       providers: [
-        ChangeNotifierProvider(
-          create: (context) => UserProvider(),
-        ),
+        MultiProvider(providers: [
+          ChangeNotifierProvider(
+            create: (context) => UserProvider(),
+          ),
+          ChangeNotifierProvider(
+            create: (context) => ProductProvider(),
+          ),
+        ])
       ],
       child: const MyApp(),
     ),
