@@ -34,8 +34,8 @@ class _PostsScreenState extends State<PostsScreen> {
 
   void deleteProduct(Product product, int index) {
     _adminServices.deleteProduct(context, product, () {
-      productsList!.removeAt(index);
-      setState(() {});
+      // productsList!.removeAt(index);
+      // setState(() {});
     });
   }
 
@@ -78,9 +78,10 @@ class _PostsScreenState extends State<PostsScreen> {
                             ),
                             InkWell(
                                 onTap: () {
-                                  Provider.of<ProductProvider>(context)
+                                  Provider.of<ProductProvider>(context,
+                                          listen: false)
                                       .deleteProduct(product.id);
-                                  // deleteProduct(product, index);
+                                  deleteProduct(product, index);
                                 },
                                 child: const Icon(
                                   Icons.delete_outline,
