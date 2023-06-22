@@ -21,8 +21,6 @@ class SearchServices {
     try {
       http.Response response = await http.get(
           Uri.parse(
-            //*the ? character is used in the URI to indicate the start of the
-            //*query parameters section
             "$uri/api/products/search/$searchQuery",
           ),
           headers: {
