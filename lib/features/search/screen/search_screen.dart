@@ -1,3 +1,4 @@
+import 'package:amazon_clone/features/product_details/screens/product_details_screen.dart';
 import 'package:amazon_clone/features/search/services/search_services.dart';
 import 'package:flutter/material.dart';
 
@@ -119,7 +120,11 @@ class _SearchScreenState extends State<SearchScreen> {
                     itemCount: products!.length,
                     itemBuilder: (context, index) {
                       return GestureDetector(
-                        onTap: () {},
+                        onTap: () {
+                          Navigator.pushNamed(
+                              context, ProductDetailScreen.routeName,
+                              arguments: products![index]);
+                        },
                         child: SearchedProduct(
                           product: products![index],
                         ),

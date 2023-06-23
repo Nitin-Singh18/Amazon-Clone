@@ -4,7 +4,8 @@ import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter/src/widgets/placeholder.dart';
 
 class CarouselSlider extends StatefulWidget {
-  const CarouselSlider({super.key});
+  final List<String> images;
+  const CarouselSlider({super.key, required this.images});
 
   @override
   State<CarouselSlider> createState() => _CarouselSliderState();
@@ -21,9 +22,8 @@ class _CarouselSliderState extends State<CarouselSlider> {
           height: 200,
           width: double.infinity,
           child: Image.network(
-            GlobalVariables
-                .carouselImages[index % GlobalVariables.carouselImages.length],
-            fit: BoxFit.fitHeight,
+            widget.images[index % widget.images.length],
+            fit: BoxFit.contain,
           ),
         );
       }),

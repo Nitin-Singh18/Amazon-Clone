@@ -1,4 +1,5 @@
 import 'package:amazon_clone/features/home/services/home_services.dart';
+import 'package:amazon_clone/features/product_details/screens/product_details_screen.dart';
 import 'package:amazon_clone/models/product.dart';
 import 'package:flutter/material.dart';
 import '../../../const/global_variables.dart';
@@ -79,35 +80,42 @@ class _CategoryDealsScreenState extends State<CategoryDealsScreen> {
                           if (productList!.isEmpty) {
                             return Container();
                           }
-                          return Column(
-                            children: [
-                              SizedBox(
-                                height: 130,
-                                child: Container(
-                                  padding: const EdgeInsets.all(10),
-                                  decoration: BoxDecoration(
-                                    border: Border.all(
-                                        color: Colors.black12, width: 0.5),
+                          return GestureDetector(
+                            onTap: () {
+                              Navigator.pushNamed(
+                                  context, ProductDetailScreen.routeName,
+                                  arguments: product);
+                            },
+                            child: Column(
+                              children: [
+                                SizedBox(
+                                  height: 130,
+                                  child: Container(
+                                    padding: const EdgeInsets.all(10),
+                                    decoration: BoxDecoration(
+                                      border: Border.all(
+                                          color: Colors.black12, width: 0.5),
+                                    ),
+                                    child: Image.network(
+                                      product.images[0],
+                                      fit: BoxFit.fitHeight,
+                                    ),
                                   ),
-                                  child: Image.network(
-                                    product.images[0],
-                                    fit: BoxFit.fitHeight,
+                                ),
+                                Container(
+                                  alignment: Alignment.topLeft,
+                                  padding: EdgeInsets.only(
+                                    top: 5,
+                                    left: 10,
                                   ),
-                                ),
-                              ),
-                              Container(
-                                alignment: Alignment.topLeft,
-                                padding: EdgeInsets.only(
-                                  top: 5,
-                                  left: 10,
-                                ),
-                                child: Text(
-                                  product.name,
-                                  maxLines: 1,
-                                  overflow: TextOverflow.ellipsis,
-                                ),
-                              )
-                            ],
+                                  child: Text(
+                                    product.name,
+                                    maxLines: 1,
+                                    overflow: TextOverflow.ellipsis,
+                                  ),
+                                )
+                              ],
+                            ),
                           );
                         },
                       ),
