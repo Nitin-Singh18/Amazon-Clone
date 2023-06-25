@@ -27,45 +27,43 @@ class _HomeScreenState extends State<HomeScreen> {
         appBar: PreferredSize(
           preferredSize: const Size.fromHeight(60),
           child: AppBar(
-            title: Expanded(
-              child: Container(
-                height: 42,
-                margin: const EdgeInsets.only(left: 15),
-                child: Material(
-                  borderRadius: BorderRadius.circular(7),
-                  elevation: 1,
-                  child: TextFormField(
-                    onFieldSubmitted: (value) => Navigator.pushNamed(
-                        context, SearchScreen.routeName,
-                        arguments: value),
-                    decoration: const InputDecoration(
-                      prefixIcon: InkWell(
-                        // onTap: () {},
-                        child: Icon(
-                          Icons.search,
-                          color: Colors.black,
-                          size: 23,
-                        ),
+            title: Container(
+              height: 42,
+              margin: const EdgeInsets.only(left: 15),
+              child: Material(
+                borderRadius: BorderRadius.circular(7),
+                elevation: 1,
+                child: TextFormField(
+                  onFieldSubmitted: (value) => Navigator.pushNamed(
+                      context, SearchScreen.routeName,
+                      arguments: value),
+                  decoration: const InputDecoration(
+                    prefixIcon: InkWell(
+                      // onTap: () {},
+                      child: Icon(
+                        Icons.search,
+                        color: Colors.black,
+                        size: 23,
                       ),
-                      filled: true,
-                      fillColor: Colors.white,
-                      contentPadding: EdgeInsets.only(top: 10),
-                      hintText: "Search Amazon.in",
-                      hintStyle:
-                          TextStyle(fontWeight: FontWeight.w500, fontSize: 17),
-                      border: OutlineInputBorder(
-                          borderRadius: BorderRadius.all(
-                            Radius.circular(7),
-                          ),
-                          borderSide: BorderSide.none),
-                      enabledBorder: OutlineInputBorder(
+                    ),
+                    filled: true,
+                    fillColor: Colors.white,
+                    contentPadding: EdgeInsets.only(top: 10),
+                    hintText: "Search Amazon.in",
+                    hintStyle:
+                        TextStyle(fontWeight: FontWeight.w500, fontSize: 17),
+                    border: OutlineInputBorder(
                         borderRadius: BorderRadius.all(
                           Radius.circular(7),
                         ),
-                        borderSide: BorderSide(
-                          color: Colors.black38,
-                          width: 1,
-                        ),
+                        borderSide: BorderSide.none),
+                    enabledBorder: OutlineInputBorder(
+                      borderRadius: BorderRadius.all(
+                        Radius.circular(7),
+                      ),
+                      borderSide: BorderSide(
+                        color: Colors.black38,
+                        width: 1,
                       ),
                     ),
                   ),
@@ -109,4 +107,3 @@ class _HomeScreenState extends State<HomeScreen> {
         ));
   }
 }
-// 6+2 =8   4300+1000+  1200   6000 

@@ -1,10 +1,9 @@
 import 'package:amazon_clone/common/widgets/c_button.dart';
 import 'package:amazon_clone/common/widgets/rating-widget.dart';
 import 'package:amazon_clone/features/home/widgets/carousel_slider.dart';
+import 'package:amazon_clone/features/product_details/services/product_detail_service.dart';
 import 'package:amazon_clone/models/product.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/src/widgets/framework.dart';
-import 'package:flutter/src/widgets/placeholder.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 
 import '../../../const/global_variables.dart';
@@ -20,51 +19,51 @@ class ProductDetailScreen extends StatefulWidget {
 }
 
 class _ProductDetailScreenState extends State<ProductDetailScreen> {
+  final ProductDetailServices _productDetailServices = ProductDetailServices();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: PreferredSize(
         preferredSize: const Size.fromHeight(60),
         child: AppBar(
-          title: Expanded(
-            child: Container(
-              height: 42,
-              margin: const EdgeInsets.only(left: 15),
-              child: Material(
-                borderRadius: BorderRadius.circular(7),
-                elevation: 1,
-                child: TextFormField(
-                  onFieldSubmitted: (value) => Navigator.pushNamed(
-                      context, SearchScreen.routeName,
-                      arguments: value),
-                  decoration: const InputDecoration(
-                    prefixIcon: InkWell(
-                      // onTap: () {},
-                      child: Icon(
-                        Icons.search,
-                        color: Colors.black,
-                        size: 23,
-                      ),
+          title: Container(
+            height: 42,
+            margin: const EdgeInsets.only(left: 15),
+            child: Material(
+              borderRadius: BorderRadius.circular(7),
+              elevation: 1,
+              child: TextFormField(
+                onFieldSubmitted: (value) => Navigator.pushNamed(
+                    context, SearchScreen.routeName,
+                    arguments: value),
+                decoration: const InputDecoration(
+                  prefixIcon: InkWell(
+                    // onTap: () {},
+                    child: Icon(
+                      Icons.search,
+                      color: Colors.black,
+                      size: 23,
                     ),
-                    filled: true,
-                    fillColor: Colors.white,
-                    contentPadding: EdgeInsets.only(top: 10),
-                    hintText: "Search Amazon.in",
-                    hintStyle:
-                        TextStyle(fontWeight: FontWeight.w500, fontSize: 17),
-                    border: OutlineInputBorder(
-                        borderRadius: BorderRadius.all(
-                          Radius.circular(7),
-                        ),
-                        borderSide: BorderSide.none),
-                    enabledBorder: OutlineInputBorder(
+                  ),
+                  filled: true,
+                  fillColor: Colors.white,
+                  contentPadding: EdgeInsets.only(top: 10),
+                  hintText: "Search Amazon.in",
+                  hintStyle:
+                      TextStyle(fontWeight: FontWeight.w500, fontSize: 17),
+                  border: OutlineInputBorder(
                       borderRadius: BorderRadius.all(
                         Radius.circular(7),
                       ),
-                      borderSide: BorderSide(
-                        color: Colors.black38,
-                        width: 1,
-                      ),
+                      borderSide: BorderSide.none),
+                  enabledBorder: OutlineInputBorder(
+                    borderRadius: BorderRadius.all(
+                      Radius.circular(7),
+                    ),
+                    borderSide: BorderSide(
+                      color: Colors.black38,
+                      width: 1,
                     ),
                   ),
                 ),
@@ -175,7 +174,11 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                 Icons.star,
                 color: GlobalVariables.secondaryColor,
               ),
-              onRatingUpdate: (rating) {},
+              onRatingUpdate: (rating) {
+                print("rated");
+                _productDetailServices.rateproduct(
+                    context, rating, widget.product.id!);
+              },
             ),
           ],
         ),
