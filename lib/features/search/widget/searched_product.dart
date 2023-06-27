@@ -2,16 +2,32 @@ import 'package:flutter/material.dart';
 
 import '../../../common/widgets/rating-widget.dart';
 import '../../../models/product.dart';
+import '../../../models/rating.dart';
+import '../../../providers/user_provider.dart';
 
 class SearchedProduct extends StatelessWidget {
   final Product product;
-  const SearchedProduct({
+  SearchedProduct({
     Key? key,
     required this.product,
   }) : super(key: key);
+  double avgRating = 0;
+  void fetchRating(context) {
+    double totalRating = 0;
+
+    debugPrint(product.rating!.length.toString());
+    for (int i = 0; i < product.rating!.length; i++) {
+      Rating element = product.rating![i];
+      totalRating += element.rating;
+    }
+    if (totalRating != 0) {
+      avgRating = totalRating / product.rating!.length;
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
+    fetchRating(context);
     return Column(
       children: [
         Container(
@@ -42,8 +58,8 @@ class SearchedProduct extends StatelessWidget {
                   Container(
                     width: 235,
                     padding: const EdgeInsets.only(left: 10, top: 5),
-                    child: const Stars(
-                      rating: 4,
+                    child: Stars(
+                      rating: avgRating,
                     ),
                   ),
                   Container(
