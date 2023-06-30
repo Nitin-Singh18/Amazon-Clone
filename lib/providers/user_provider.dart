@@ -5,13 +5,15 @@ import '../models/product.dart';
 
 class UserProvider extends ChangeNotifier {
   User _user = User(
-      id: '',
-      name: '',
-      email: '',
-      password: '',
-      address: '',
-      type: '',
-      token: '');
+    id: '',
+    name: '',
+    email: '',
+    password: '',
+    address: '',
+    type: '',
+    token: '',
+    cart: [],
+  );
 
   User get user => _user;
 
@@ -19,10 +21,15 @@ class UserProvider extends ChangeNotifier {
     _user = User.fromJson(user);
     notifyListeners();
   }
+
+  void setUserFromModel(User user) {
+    _user = user;
+    notifyListeners();
+  }
 }
 
 class ProductProvider extends ChangeNotifier {
-  List<Product> _productList = [];
+  final List<Product> _productList = [];
 
   List<Product> get products => _productList;
   void addProduct(Product product) {

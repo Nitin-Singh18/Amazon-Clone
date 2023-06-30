@@ -22,13 +22,15 @@ class AuthService {
       String email, String password, String name, BuildContext context) async {
     try {
       User user = User(
-          id: '',
-          name: name,
-          email: email,
-          password: password,
-          address: '',
-          type: '',
-          token: '');
+        id: '',
+        name: name,
+        email: email,
+        password: password,
+        address: '',
+        type: '',
+        token: '',
+        cart: [],
+      );
 
       http.Response res = await http.post(Uri.parse('$uri/api/signup'),
           body: json.encode(user.toMap()),
