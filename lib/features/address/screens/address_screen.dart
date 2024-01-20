@@ -1,6 +1,7 @@
 import 'package:amazon_clone/const/global_variables.dart';
 import 'package:amazon_clone/const/payment_configuration.dart';
 import 'package:amazon_clone/const/utils.dart';
+import 'package:amazon_clone/features/address/services/address_services.dart';
 import 'package:amazon_clone/providers/user_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:pay/pay.dart';
@@ -25,6 +26,7 @@ class _AddressScreenState extends State<AddressScreen> {
   final _addressFormKey = GlobalKey<FormState>();
   List<PaymentItem> paymentItems = [];
   String addressToBeUsed = "";
+  final AddressServices _addressServices = AddressServices();
 
   @override
   void initState() {
@@ -69,7 +71,21 @@ class _AddressScreenState extends State<AddressScreen> {
     print(addressToBeUsed);
   }
 
-  void onPaymentResult(Map<String, dynamic> result) {}
+  void onPaymentResult(Map<String, dynamic> result) {
+    if (Provider.of<UserProvider>(context, listen: false)
+        .user
+        .address
+        .isEmpty) {
+      _addressServices.saveUserAddress(
+          context: context, address: addressToBeUsed);
+    }
+
+    _addressServices.placeOrder(
+      context: context,
+      address: addressToBeUsed,
+      totalAmount: double.parse(widget.totalAmount),
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
