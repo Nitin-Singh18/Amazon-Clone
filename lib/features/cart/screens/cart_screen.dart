@@ -1,3 +1,4 @@
+import 'package:amazon_clone/features/address/screens/address_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -20,6 +21,10 @@ class _CartScreenState extends State<CartScreen> {
   @override
   Widget build(BuildContext context) {
     final user = context.watch<UserProvider>().user;
+    int sum = 0;
+    user.cart
+        .map((e) => sum += e['quantity'] * e['product']['price'] as int)
+        .toList();
     return Scaffold(
       appBar: PreferredSize(
         preferredSize: const Size.fromHeight(60),
@@ -92,7 +97,8 @@ class _CartScreenState extends State<CartScreen> {
             padding: const EdgeInsets.all(8.0),
             child: CustomButton(
               title: 'Proceed to Buy (${user.cart.length}) items',
-              ontap: () {},
+              ontap: () => Navigator.pushNamed(context, AddressScreen.routeName,
+                  arguments: sum.toString()),
               color: Colors.yellow.shade600,
             ),
           ),
