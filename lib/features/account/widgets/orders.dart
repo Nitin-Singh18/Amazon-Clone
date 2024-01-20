@@ -1,8 +1,8 @@
 import 'package:amazon_clone/const/global_variables.dart';
+import 'package:amazon_clone/features/account/services/account_services.dart';
 import 'package:amazon_clone/features/account/widgets/product_tile.dart';
+import 'package:amazon_clone/models/order.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/src/widgets/framework.dart';
-import 'package:flutter/src/widgets/placeholder.dart';
 
 class OrderScreen extends StatefulWidget {
   const OrderScreen({super.key});
@@ -12,52 +12,64 @@ class OrderScreen extends StatefulWidget {
 }
 
 class _OrderScreenState extends State<OrderScreen> {
-  List list = [
-    "https://images.unsplash.com/photo-1531297484001-80022131f5a1?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8NHx8dGVjaG5vbG9neXxlbnwwfHwwfHw%3D&auto=format&fit=crop&w=500&q=60",
-    "https://images.unsplash.com/photo-1531297484001-80022131f5a1?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8NHx8dGVjaG5vbG9neXxlbnwwfHwwfHw%3D&auto=format&fit=crop&w=500&q=60",
-    "https://images.unsplash.com/photo-1531297484001-80022131f5a1?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8NHx8dGVjaG5vbG9neXxlbnwwfHwwfHw%3D&auto=format&fit=crop&w=500&q=60",
-    "https://images.unsplash.com/photo-1531297484001-80022131f5a1?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8NHx8dGVjaG5vbG9neXxlbnwwfHwwfHw%3D&auto=format&fit=crop&w=500&q=60",
-  ];
+  final AccountServices _accountServices = AccountServices();
+  List<Order>? orders;
+
+  @override
+  void initState() {
+    super.initState();
+    fetchOrders();
+  }
+
+  void fetchOrders() async {
+    orders = await _accountServices.fetchOrders(context);
+    setState(() {});
+  }
+
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: [
-        Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            Text(
-              "Your Orders",
-              style: TextStyle(
-                fontSize: 18,
-                fontWeight: FontWeight.w600,
+    return orders == null
+        ? const Center(
+            child: CircularProgressIndicator(),
+          )
+        : Column(
+            children: [
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  const Text(
+                    "Your Orders",
+                    style: TextStyle(
+                      fontSize: 18,
+                      fontWeight: FontWeight.w600,
+                    ),
+                  ),
+                  Text(
+                    "See all",
+                    style: TextStyle(
+                      fontSize: 15,
+                      color: GlobalVariables.selectedNavBarColor,
+                      fontWeight: FontWeight.w400,
+                    ),
+                  ),
+                ],
               ),
-            ),
-            Text(
-              "See all",
-              style: TextStyle(
-                fontSize: 15,
-                color: GlobalVariables.selectedNavBarColor,
-                fontWeight: FontWeight.w400,
+              const SizedBox(
+                height: 12,
               ),
-            ),
-          ],
-        ),
-        SizedBox(
-          height: 12,
-        ),
-        SizedBox(
-          height: 170,
-          child: ListView.builder(
-            scrollDirection: Axis.horizontal,
-            itemCount: list.length,
-            itemBuilder: (context, index) {
-              return ProductTile(
-                productImage: list[index],
-              );
-            },
-          ),
-        )
-      ],
-    );
+              SizedBox(
+                height: 170,
+                child: ListView.builder(
+                  scrollDirection: Axis.horizontal,
+                  itemCount: orders!.length,
+                  itemBuilder: (context, index) {
+                    return ProductTile(
+                      productImage: orders![index].products[0].images[0],
+                    );
+                  },
+                ),
+              )
+            ],
+          );
   }
 }
