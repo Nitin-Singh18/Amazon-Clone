@@ -1,6 +1,10 @@
+import 'package:amazon_clone/common/widgets/c_button.dart';
+import 'package:amazon_clone/features/admin/services/admin_services.dart';
 import 'package:amazon_clone/models/order.dart';
+import 'package:amazon_clone/providers/user_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:provider/provider.dart';
 
 import '../../../const/global_variables.dart';
 import '../../search/screen/search_screen.dart';
@@ -15,6 +19,7 @@ class OrderDetailsScreen extends StatefulWidget {
 }
 
 class _OrderDetailsScreenState extends State<OrderDetailsScreen> {
+  final AdminServices _adminServices = AdminServices();
   int currentStep = 0;
   @override
   void initState() {
@@ -22,8 +27,22 @@ class _OrderDetailsScreenState extends State<OrderDetailsScreen> {
     currentStep = widget.order.status;
   }
 
+  // For admin
+  void changeOrderStatus(int status) {
+    _adminServices.changeOrderStatus(
+        context: context,
+        status: status + 1,
+        order: widget.order,
+        onSuccess: () {
+          setState(() {
+            currentStep += 1;
+          });
+        });
+  }
+
   @override
   Widget build(BuildContext context) {
+    final user = context.read<UserProvider>().user;
     return Scaffold(
       appBar: PreferredSize(
         preferredSize: const Size.fromHeight(60),
@@ -184,6 +203,12 @@ class _OrderDetailsScreenState extends State<OrderDetailsScreen> {
                 child: Stepper(
                   currentStep: currentStep,
                   controlsBuilder: (context, details) {
+                    if (user.type == 'admin') {
+                      return CustomButton(
+                        title: "Done",
+                        ontap: () => changeOrderStatus(details.currentStep),
+                      );
+                    }
                     return const SizedBox();
                   },
                   steps: [

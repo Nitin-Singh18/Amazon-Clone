@@ -1,3 +1,4 @@
+import 'package:amazon_clone/features/admin/screens/orders_screen.dart';
 import 'package:amazon_clone/features/admin/screens/posts_screen.dart';
 import 'package:flutter/material.dart';
 
@@ -18,9 +19,7 @@ class _AdminScreenState extends State<AdminScreen> {
   List<Widget> pages = [
     const PostsScreen(),
     const PostsScreen(),
-    const Center(
-      child: Text("Cart Page"),
-    ),
+    const OrdersScreen(),
   ];
   @override
   Widget build(BuildContext context) {

@@ -6,6 +6,7 @@ import 'dart:io';
 import 'package:amazon_clone/const/error_handling.dart';
 import 'package:amazon_clone/const/global_variables.dart';
 import 'package:amazon_clone/const/utils.dart';
+import 'package:amazon_clone/models/order.dart';
 import 'package:amazon_clone/models/product.dart';
 import 'package:amazon_clone/providers/user_provider.dart';
 import 'package:cloudinary_public/cloudinary_public.dart';
@@ -160,5 +161,70 @@ class AdminServices {
             onSuccess();
           });
     } catch (e) {}
+  }
+
+  Future<List<Order>> fetchAllOrders(BuildContext context) async {
+    final token = context.read<UserProvider>().user.token;
+
+    List<Order> orders = [];
+
+    try {
+      http.Response response = await http.get(
+          Uri.parse(
+            "$uri/admin/get-orders",
+          ),
+          headers: {
+            'Content-Type': 'application/json; charset=UTF-8',
+            'x-auth-token': token
+          });
+      httpErrorHandle(
+          response: response,
+          context: context,
+          onSuccess: () {
+            for (int i = 0; i < jsonDecode(response.body).length; i++) {
+              orders.add(
+                Order.fromJson(
+                  jsonEncode(
+                    jsonDecode(response.body)[i],
+                  ),
+                ),
+              );
+            }
+          });
+    } catch (e) {
+      showSnackBar(context, e.toString());
+    }
+    return orders;
+  }
+
+  void changeOrderStatus({
+    required BuildContext context,
+    required int status,
+    required Order order,
+    required VoidCallback onSuccess,
+  }) async {
+    final token = context.read<UserProvider>().user.token;
+    try {
+      http.Response response = await http.post(
+        Uri.parse("$uri/admin/update-order-status"),
+        headers: {
+          'Content-Type': 'application/json; charset=UTF-8',
+          'x-auth-token': token
+        },
+        body: jsonEncode(
+          {
+            'id': order.id,
+            'status': status,
+          },
+        ),
+      );
+      httpErrorHandle(
+        response: response,
+        context: context,
+        onSuccess: onSuccess,
+      );
+    } catch (e) {
+      showSnackBar(context, e.toString());
+    }
   }
 }
