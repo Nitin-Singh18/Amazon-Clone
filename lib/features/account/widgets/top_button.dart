@@ -1,6 +1,5 @@
+import 'package:amazon_clone/features/account/services/account_services.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/src/widgets/framework.dart';
-import 'package:flutter/src/widgets/placeholder.dart';
 
 import 'button.dart';
 
@@ -29,7 +28,10 @@ class TopButtons extends StatelessWidget {
             const SizedBox(
               width: 14,
             ),
-            AccountScreenButton(title: 'Log Out', onTap: () {})
+            AccountScreenButton(
+              title: 'Log Out',
+              onTap: () => AccountServices().logout(context),
+            ),
           ],
         )
       ],

@@ -1,4 +1,3 @@
-import 'dart:ffi';
 import 'dart:io';
 
 import 'package:amazon_clone/common/widgets/c_button.dart';
@@ -85,7 +84,7 @@ class _AddProductScreenState extends State<AddProductScreen> {
         child: Form(
           key: _addProductFormKey,
           child: Padding(
-            padding: EdgeInsets.symmetric(horizontal: 10, vertical: 14),
+            padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 14),
             child: Column(
               children: [
                 images.isNotEmpty
@@ -111,7 +110,7 @@ class _AddProductScreenState extends State<AddProductScreen> {
                         child: DottedBorder(
                           borderType: BorderType.RRect,
                           radius: const Radius.circular(10),
-                          dashPattern: [10, 4],
+                          dashPattern: const [10, 4],
                           strokeCap: StrokeCap.round,
                           child: Container(
                             width: double.infinity,
